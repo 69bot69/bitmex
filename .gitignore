@@ -1,0 +1,8 @@
+models/config.go
+#models/_config-sample.go
+
+evaluations/math.go
+
+_html/
+bot/
+data/
