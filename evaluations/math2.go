@@ -33,7 +33,10 @@ func CalcIndcatorsAveLine(a *models.Indicator, chart []swagger.TradeBin) {
 		sum float64
 		// 平均値
 		av float64
+
+		// 直近検出
 	)
+
 	for _, v := range chart {
 		if v.Timestamp.Hour()%2 == 0 {
 			var this models.LineSingle
@@ -48,6 +51,7 @@ func CalcIndcatorsAveLine(a *models.Indicator, chart []swagger.TradeBin) {
 			chart2h = append(chart2h, this)
 		}
 	}
+
 	for i, v := range chart2h {
 		if 15 < i {
 			// 9*2h足平均線を作る
@@ -98,10 +102,29 @@ func CalcIndcatorsAveLine(a *models.Indicator, chart []swagger.TradeBin) {
 			change = ""
 			a.DecisionSMA = 0
 		}
-		// fmt.Printf("現在、%s - %d\n", now, a.DecisionSMA)
+
 		a.InfoStatus.Status = fmt.Sprintf("%s %s", now, change)
 
 		past = now
+	}
+
+	// 転換点を経て通して悪い時
+	// - ポジションを持っているが逆ポジ転換点ではな時
+	// 現在ポジション方向性
+	var which int
+	if 0 < a.InfoStatus.PositionsSize {
+		which = 1
+	} else if a.InfoStatus.PositionsSize < 0 {
+		which = -1
+	}
+
+	// 建玉有り
+	// 建玉ないなら、Decisionを通す
+	if which != 0 {
+		// かつ、建玉とトレンドが合致したら、変更なし
+		if a.DecisionSMA == which {
+			a.DecisionSMA = 0
+		}
 	}
 
 	// トレンド転換報告
@@ -113,7 +136,7 @@ func CalcIndcatorsAveLine(a *models.Indicator, chart []swagger.TradeBin) {
 			Username: models.Gmail,
 			Password: models.GmailPass,
 			To:       models.GmailSendTo,
-			Sub:      "トレンド転換!",
+			Sub:      fmt.Sprintf("トレンド転換! %s", models.Name),
 			Msg:      email,
 		}
 
