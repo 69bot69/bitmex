@@ -18,15 +18,18 @@
 - BitMEX API KEY/SECRET KEY
 
 ## Usage
+0.
 1. ./models/\_config-sample.goを参考にKEYなど各種設定を記述ください。  
 2. また、./evaluations/math2.goにて、移動平均線の数値を変更できます。初期設定はSMA9/16
 3. ./order/post-order.goにて、活用証拠金の割合数値を変更できます。初期設定は500%程度を活用します。
 
 ```
+$ git clone git@gitlab.com:k-terashima/bitmex.pub.git bitmex.lib
 $ go run main.go
 
 又は
 
+$ git clone git@gitlab.com:k-terashima/bitmex.pub.git bitmex.lib
 $ go build
 $ ./bitmex.bot &
 ```
