@@ -45,7 +45,7 @@ $ ./bitmex.lib &
 
 ## 投げ銭
 配布者ビットコインウォレット（BitPay）:
-1Mm3R7BsVvT39sKUiYWK9QxZ28f1HPUjLR
+1JuuQma9xhsH63A99uyqArr681P4ii2DsF
 
 配布者ビットコインキャッシュウォレット（BitPay）:
 qqq2ld7yj5j9xe77xqxeclykauve70zlu53urvjctz
