@@ -75,7 +75,7 @@ func main() {
 	// // 板情報・損切りチェック
 	tick_Check := time.NewTicker(time.Duration(models.API_WAIT_CHECK) * time.Millisecond)
 	// // 板履歴
-	tick_10s := time.NewTicker(time.Duration(10) * time.Second)
+	tick_15s := time.NewTicker(time.Duration(15) * time.Second)
 	// // 設定調整 && メモリCLEAR
 	// // && ノーポジ注文チェック
 	tick_60s := time.NewTicker(time.Duration(60) * time.Second)
@@ -91,7 +91,7 @@ func main() {
 				// 取引所全約定履歴取得
 				w.GetApiExecutionsExchanges(&a)
 
-			case <-tick_10s.C:
+			case <-tick_15s.C:
 				// 取引所全約定履歴取得
 				w.OrderBookL2(&a)
 				// インジケータ作成し、取引判断

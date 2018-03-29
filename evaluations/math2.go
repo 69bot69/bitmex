@@ -6,8 +6,8 @@ import (
 	"time"
 
 	"bitmex.lib/models"
+	"bitmex.lib/util"
 	"github.com/qct/bitmex-go/swagger"
-	"togashi.dev/util"
 )
 
 var (
@@ -15,6 +15,13 @@ var (
 	now    string
 	past   string
 	allPL  float64
+
+	// // Test用トレンドシグナル強制発生
+	// test bool = true
+	// if test == true {
+	// 	a.DecisionSMA = -1
+	// 	test = false
+	// }
 )
 
 func CalcIndcatorsAveLine(a *models.Indicator, chart []swagger.TradeBin) {
