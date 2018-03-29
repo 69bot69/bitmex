@@ -23,7 +23,7 @@ __発注などの基本機能以外の特筆機能__
 - $ go env で環境情報がでるようにPATHを通す
 - Goのソースを動かすPCディレクトリを整備する
 - githubからソースをダウンロードするためのgitをインストール
-- BitMEX API KEY/SECRET KEY
+- BitMEX API KEY/SECRET KEY（[MEX紹介リンク](https://www.bitmex.com/register/hwAUJG)）
 
 ### Go言語インストール参考
 -  [はじめての Go 言語 (on Windows)](https://qiita.com/spiegel-im-spiegel/items/dca0df389df1470bdbfa)
