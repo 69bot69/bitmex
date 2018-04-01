@@ -97,7 +97,10 @@ func main() {
 				// インジケータ作成し、取引判断
 				// ここでのインジケータを元に数回の発注処理を行う
 				// 取引決断: a.decisionの発行
-				ev.CalcIndcators(&a)
+
+				// // 注意: 下記関数は.gitignoreしています。
+				// // BitFlyerで使っていたEMAと複雑なロジックです。
+				// ev.CalcIndcators(&a)
 
 			case <-tick_60s.C:
 				// 現建玉照会
