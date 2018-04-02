@@ -43,8 +43,8 @@ __過去チャートでの試算__  ※ 去年までの上昇相場を含みま�
 
 ```
 // ソースをそのまま動かす
-$ git clone git@gitlab.com:k-terashima/bitmex.pub.git bitmex.lib
-$ cd ./bitmex.lib
+$ git clone git@gitlab.com:k-terashima/bitmex.pub.git
+$ cd ./bitmex.pub
 $ go get
 $ go run main.go
 ```
@@ -53,11 +53,11 @@ $ go run main.go
 
 ```
 // ワンソースビルド
-$ git clone git@gitlab.com:k-terashima/bitmex.pub.git bitmex.lib
-$ cd ./bitmex.lib
+$ git clone git@gitlab.com:k-terashima/bitmex.pub.git
+$ cd ./bitmex.pub
 $ go get
 $ go build
-$ ./bitmex.lib &
+$ ./bitmex.pub &
 ```
 
 ### 諸設定が空なのでエラーが出ます

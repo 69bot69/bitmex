@@ -5,8 +5,8 @@ import (
 	"log"
 	"time"
 
-	"bitmex.lib/models"
-	"bitmex.lib/util"
+	"bitmex.pub/models"
+	"bitmex.pub/util"
 	"github.com/qct/bitmex-go/swagger"
 )
 
@@ -16,12 +16,9 @@ var (
 	past   string
 	allPL  float64
 
-	// // Test用トレンドシグナル強制発生
-	// test bool = true
-	// if test == true {
-	// 	a.DecisionSMA = -1
-	// 	test = false
-	// }
+	// Test用トレンドシグナル強制発生
+	test    bool = true
+	test_bs      = -1
 )
 
 func CalcIndcatorsAveLine(a *models.Indicator, chart []swagger.TradeBin) {
@@ -115,6 +112,12 @@ func CalcIndcatorsAveLine(a *models.Indicator, chart []swagger.TradeBin) {
 		past = now
 	}
 
+	// テスト用強制トレンド
+	if test == true {
+		a.DecisionSMA = test_bs
+		test = false
+	}
+
 	// 転換点を経て通して悪い時
 	// - ポジションを持っているが逆ポジ転換点ではな時
 	// 現在ポジション方向性
@@ -133,6 +136,8 @@ func CalcIndcatorsAveLine(a *models.Indicator, chart []swagger.TradeBin) {
 			a.DecisionSMA = 0
 		}
 	}
+
+	fmt.Println("トレンド", a.DecisionSMA)
 
 	// トレンド転換報告
 	if a.DecisionSMA != 0 {

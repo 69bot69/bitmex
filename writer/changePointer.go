@@ -1,7 +1,7 @@
 package writer
 
 import (
-	"bitmex.lib/models"
+	"bitmex.pub/models"
 )
 
 var (

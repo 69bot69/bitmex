@@ -7,11 +7,11 @@ import (
 	"net/http"
 	"time"
 
-	c "bitmex.lib/controllers"
-	ev "bitmex.lib/evaluations"
-	"bitmex.lib/models"
-	"bitmex.lib/order"
-	w "bitmex.lib/watch"
+	c "bitmex.pub/controllers"
+	ev "bitmex.pub/evaluations"
+	"bitmex.pub/models"
+	"bitmex.pub/order"
+	w "bitmex.pub/watch"
 	"github.com/qct/bitmex-go/swagger"
 )
 

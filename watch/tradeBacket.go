@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"time"
 
-	"bitmex.lib/models"
+	"bitmex.pub/models"
 	"github.com/labstack/gommon/log"
 	"github.com/qct/bitmex-go/swagger"
 )

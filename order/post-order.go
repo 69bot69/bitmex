@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"math"
 
-	"bitmex.lib/models"
+	"bitmex.pub/models"
 	"github.com/qct/bitmex-go/swagger"
 )
 

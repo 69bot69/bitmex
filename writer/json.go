@@ -6,7 +6,7 @@ import (
 	"io/ioutil"
 	"time"
 
-	"bitmex.lib/models"
+	"bitmex.pub/models"
 )
 
 func WriteJson(a []models.Indicator) error {

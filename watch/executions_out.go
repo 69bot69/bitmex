@@ -7,7 +7,7 @@ import (
 	"net/http"
 	"strconv"
 
-	"bitmex.lib/models"
+	"bitmex.pub/models"
 	"github.com/labstack/gommon/log"
 )
 
