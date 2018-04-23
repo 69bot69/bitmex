@@ -40,6 +40,7 @@ const (
 	// // BitFlyer
 	PATH_DOMAIN_BF  = "https://api.bitflyer.jp"
 	PATH_EXECUTIONS = "/v1/getexecutions?product_code=FX_BTC_JPY&count=500"
+	PATH_TICKER_BF  = "/v1/ticker?product_code=BTC_JPY"
 	// // BitFinex
 	PATH_EXECUTIONS_fn = "https://api.bitfinex.com/v1/trades/btcusd?limit_trades=500"
 	// // Binance

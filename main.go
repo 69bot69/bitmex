@@ -43,6 +43,9 @@ func init() {
 	a.Setting.Size = 5000
 	a.Setting.Leverage = 25
 
+	// 現在価格(円)の取得
+	a.GetCurrentJPY()
+
 	// 初期証拠金取得
 	// w.GetWallet(&a)
 	w.GetWalletMargin(&a)
@@ -117,6 +120,8 @@ func main() {
 				// 336時間分の2時間足を取得
 				chart = w.GetTradeBacket1mOf2wFor2h(&a)
 				ev.CalcIndcatorsAveLine(&a, chart)
+				// 現在価格(円)の取得
+				a.GetCurrentJPY()
 
 			}
 		}
@@ -152,7 +157,7 @@ func main() {
 			int(a.Setting.BoardRange*100),
 			a.Setting.Size,
 
-			a.InfoStatus.StartCol, a.InfoStatus.NowCol,
+			a.InfoStatus.StartCol, a.InfoStatus.NowCol, int(a.JPY(float32(a.InfoStatus.StartCol))), int(a.JPY(float32(a.InfoStatus.NowCol))),
 			a.InfoStatus.AvailableMargin,
 			a.InfoStatus.ChangeCol,
 
@@ -163,7 +168,7 @@ func main() {
 			a.InfoStatus.PositionsAvg,
 			int(a.InfoStatus.PositionsCost),
 			float32(a.InfoStatus.PositionsCostPcnt*100),
-			int(a.InfoStatus.PositionsPL),
+			int(a.InfoStatus.PositionsPL), int(a.JPY(a.InfoStatus.PositionsPL)),
 			float32(a.InfoStatus.PositionsPLPcnt*100),
 
 			a.InfoStatus.Health,
@@ -290,7 +295,8 @@ var html string = `<!DOCTYPE html>
            -->
 
           <dt>ステータス</dt>
-          <dd>初期/現在証拠金: %d / %d</dd>
+          <dd>初期/現在証拠金 (XBt): %d / %d</dd>
+          <dd>初期/現在証拠金 (円) : %d / %d</dd>
           <dd>使用可能証拠金: %d</dd>
           <dd>証拠金変動額: %d</dd>
 
@@ -302,7 +308,7 @@ var html string = `<!DOCTYPE html>
           <dd>平均取得価額: %f</dd>
           <dd>使用証拠金: %d XBt</dd>
           <dd>証拠金使用率: %f ％</dd>
-          <dd>総建玉損益合計: %d XBt</dd>
+          <dd>総建玉損益合計: %d XBt (%d 円)</dd>
           <dd>総資産ROE: %f ％</dd>
 
           <dt>現情報</dt>
