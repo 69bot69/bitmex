@@ -1,6 +1,16 @@
 package models
 
-import "time"
+import (
+	"encoding/json"
+	"fmt"
+	"io/ioutil"
+	"net/http"
+	"time"
+)
+
+const (
+	BTC_SATOSHI = 100000000 // 1BTC = 100000000 satoshi
+)
 
 // save 取引決断になる分析情報
 type LineSingle struct {
@@ -72,6 +82,8 @@ type Indicator struct {
 		Mean       float32 // 直近平均値
 		Dispersion float32 // 分散
 		Deviation  float32 // 標準偏差
+
+		Yen float32 // 現時点の日本円価格
 	}
 
 	StrongSide   int // 初期値: 0 / 買い: 1 / 売り: -1
@@ -171,6 +183,43 @@ type Indicator struct {
 	SideHistory []int
 }
 
+// 日本円の取得
+func (i *Indicator) GetCurrentJPY() {
+	var body TickerInfo_bf
+
+	method := "GET"
+	url := PATH_DOMAIN_BF + PATH_TICKER_BF
+
+	// BitFlyer
+	req, err := http.NewRequest(method, url, nil)
+	req.Header.Set("Content-Type", "application/json")
+
+	// Request本体
+	client := &http.Client{}
+	res, err := client.Do(req)
+	if err != nil {
+		fmt.Printf("アクセスエラー: Bitflyer - %s", err)
+		i.InfoStatus.Yen = 0
+		return
+	}
+	defer res.Body.Close()
+
+	bytes, _ := ioutil.ReadAll(res.Body)
+
+	if err := json.Unmarshal(bytes, &body); err != nil {
+		fmt.Printf("アンマーシャルエラー")
+		i.InfoStatus.Yen = 0
+		return
+	}
+	i.InfoStatus.Yen = float32(body.Ltp)
+	return
+}
+
+// 日本円に変換
+func (i Indicator) JPY(satoshi float32) float32 {
+	return satoshi / BTC_SATOSHI * i.InfoStatus.Yen
+}
+
 // 約定履歴
 // // 約定履歴 BitFlyer
 type ApiExecution_bf struct {
@@ -213,4 +262,20 @@ type WalletSummary struct {
 	WalletBalance int64  `json:"walletBalance"`
 	UnrealisedPnl int64  `json:"unrealisedPnl"`
 	MarginBalance int64  `json:"marginBalance"`
+}
+
+// 現在価格 bitFlyer
+type TickerInfo_bf struct {
+	ProductCode     string  `json:"product_code"`
+	Timestamp       string  `json:"timestamp"`
+	TickID          int     `json:"tick_id"`
+	BestBid         float64 `json:"best_bid"`
+	BestAsk         float64 `json:"best_ask"`
+	BestBidSize     float64 `json:"best_bid_size"`
+	BestAskSize     float64 `json:"best_ask_size"`
+	TotalBidDepth   float64 `json:"total_bid_depth"`
+	TotalAskDepth   float64 `json:"total_ask_depth"`
+	Ltp             float64 `json:"ltp"`
+	Volume          float64 `json:"volume"`
+	VolumeByProduct float64 `json:"volume_by_product"`
 }
